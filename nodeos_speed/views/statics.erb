@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bootstrap test</title>
+  <link rel="stylesheet" href="./css/bootstrap.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/bootstrap.js"></script>
+  <script src="./js/highcharts.js"></script>
+  <script>
+	var pie_setting={
+	    credits: {
+		  enabled: false
+		},
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+        },
+        title: {
+            text: 'OS using percent chart'
+        },
+        tooltip: {
+    	    pointFormat: ' <b>{point.percentage:.3f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                    format: '<b>{point.name}</b>: {point.percentage:.3f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                },
+				showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            data: [
+                ['Firefox',   45.0],
+                ['IE',       26.8],
+                ['Chrome',  12.8],
+                ['Safari',    8.5],
+                ['Opera',     6.2],
+                ['Others',   0.7]
+            ]
+        }]
+
+	};
+	line_setting={
+	    credits: {
+		  enabled: false
+		},
+        title: {
+          text: 'OS statics chart'
+        },
+        xAxis: {
+		  //type: 'datetime',
+          categories: ['20140821', '20140822', '20140823']
+        },
+        yAxis: {
+          title: {
+            text: 'OS count'
+          }
+        },
+        series: [{
+          name: 'Jane',
+          data: [1, 0, 4]
+        }, {
+          name: 'John',
+          data: [5, 7, 3]
+        }]
+	};
+
+    $(function () { 
+	  $.getJSON("centos_line",function(json){
+	    line_setting["xAxis"]["categories"]=json["categories"];
+		line_setting["series"]=json["series"];
+	    $('#chartcontainer').highcharts(line_setting);
+	  })
+	  //$('#chartcontainer').highcharts(line_setting);
+	
+      $.getJSON("centos_pie",function(json){
+		pie_setting["series"][0]["data"]=json;
+	    $('#piecontainer').highcharts(pie_setting);
+	  })
+
+      //$('#piecontainer').highcharts(pie_setting);
+	  
+	  $('a[data-toggle="tab"]').on('show.bs.tab',function(e){
+	    osname=$(this).attr("value")
+		var target=$(e.target).attr("href")
+		$.ajax({
+		  type:"GET",
+		  url:"centos_host?osname="+osname,
+		  success: function(data){
+		    $(target).html(data);
+		  }
+		});
+	  })
+    });
+	
+  </script>
+</head>
+	
+<body>
+<div class="container">
+  <h2>OS Statics</h2>
+  <div id="chartcontainer" class="col-md-6"  style="height:400px;"></div>
+  <div id="piecontainer" class="col-md-6" style="height:400px;"></div>
+    <div class="tabbable">  
+	  <h3>Host List</h3>
+      <ul id="myTab" class="nav nav-tabs"> 
+	  <% @oslist.each do |os| %>
+        <li><a href="#tt" data-toggle="tab" value="<%= os[0]%>"><%= os[0]%></a></li>  
+	  <% end %>
+      </ul>  
+      <div class="tab-content">  
+        <div id="tt" class="tab-pane">  
+        </div> 
+      </div>  
+    </div>  
+</div>
+</body>
+</html>

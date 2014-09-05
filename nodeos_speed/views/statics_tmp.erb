@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bootstrap test</title>
+  <link rel="stylesheet" href="./css/bootstrap.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/bootstrap.js"></script>
+  <script src="./js/highcharts.js"></script>
+  <script>
+	function test(str){
+    $.ajax({
+	  type:"post",
+	  url:"centos",
+	  data:{mess:test},
+	  dataType:"json",
+	  success:function(data){
+			alert(data)
+	  }
+	});
+	  alert(str);
+	}
+    $(function () { 
+      $('#chartcontainer').highcharts({
+	    credits: {
+		  enable: false
+		},
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: 'OS statics chart'
+        },
+        xAxis: {
+		  //type: 'datetime',
+          categories: ['20140821', '20140822', '20140823']
+        },
+        yAxis: {
+          title: {
+            text: 'something'
+          }
+        },
+        series: [{
+          name: 'Jane',
+          data: [1, 0, 4]
+        }, {
+          name: 'John',
+          data: [5, 7, 3]
+        }]
+      });
+
+      $('#piecontainer').highcharts({
+	    credits: {
+		  enable: false
+		},
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+        },
+        title: {
+            text: 'OS using percent chart'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox',   45.0],
+                ['IE',       26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari',    8.5],
+                ['Opera',     6.2],
+                ['Others',   0.7]
+            ]
+        }]
+     });
+   });
+  </script>
+</head>
+	
+<body>
+<div class="container">
+  <h2>bootstrap <small>modify</small></h2>
+  <div id="chartcontainer" class="col-xs-6" style="height:400px;"></div>
+  <div id="piecontainer" class="col-xs-6" style="height:400px;"></div>
+    <div class="tabbable">  
+	<input type="button" onclick="test('xiaobai')" value="test"/>
+      <ul id="myTab" class="nav nav-tabs">  
+        <li class="active"><a href="#1" data-toggle="tab">Home</a></li>  
+        <li><a href="#tt" data-toggle="tab">Profile</a></li>  
+        <li><a href="#3" data-toggle="tab">Messages</a></li>  
+      </ul>  
+      <div class="tab-content">  
+        <div class="tab-pane active" id="1">  
+		  <table class="table table-hover">
+			<% @hostlist.each_key do |host| %>
+            <tr>
+              <td><%= host%></td>
+            </tr>
+			<% end %>
+          </table> 
+        </div>  
+        <div id="tt" class="tab-pane">  
+		  <table class="table table-hover">
+            <tr>
+              <td>21</td>
+              <td>22</td>
+            </tr>
+            <tr>
+              <td>test21</td>
+              <td>test22</td>
+            </tr>
+          </table> 
+        </div> 
+        <div id="3" class="tab-pane">  
+ 		  <table class="table table-hover">
+            <tr>
+              <td>31</td>
+              <td>32</td>
+            </tr>
+            <tr>
+              <td>test31</td>
+              <td>test32</td>
+            </tr>
+          </table>
+        </div> 
+      </div>  
+    </div>  
+</div>
+</body>
+</html>

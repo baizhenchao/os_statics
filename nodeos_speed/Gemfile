@@ -1,0 +1,6 @@
+source "http://ruby.taobao.org"
+
+gem "rspec"
+gem "rest_client"
+gem "mysql"
+gem "redis"

@@ -1,0 +1,8 @@
+# nodeos_statics config
+---
+log:
+  level: DEBUG
+  path: /home/baizc/work/nodeos_statics/log/nodeos_statics.log
+
+port: 8083
+

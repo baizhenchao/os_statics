@@ -1,0 +1,10 @@
+db:
+  ip: 10.50.35.55
+  port: 3308
+  user: iws
+  pass: iws
+  database: iws
+redis:
+  host: 127.0.0.1
+  port: 6379
+  db: 15
