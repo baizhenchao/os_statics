@@ -1,11 +1,9 @@
 #! ruby
+# 和数据库有关的东西可以封入一个对象，回一下Active Record
 $mydb=Db.new $config["db"]
 def getrange(hostlist)
 		range=""
-		hostlist.each_key do |key|
-		       range+="\""+key+"\""+","
-		end
-		range=range.chop
+		range=hostlist.join(",")
 		return range
 end
 def gethostbyOs(os,date,hostlist)

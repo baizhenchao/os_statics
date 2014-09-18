@@ -13,6 +13,10 @@ class Urlredis
 	def check(key)
 		@@redis.exists(key)
 	end
+	def checkset(key,res)
+		res=res.to_json
+		@@redis.set(key,res) 
+	end
 end
 #url=Urlredis.new
 #p url.continue("mykey")

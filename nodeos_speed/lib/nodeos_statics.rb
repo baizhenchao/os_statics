@@ -12,7 +12,6 @@ require 'redis'
 require 'nodeos_statics/dbconfig'
 require 'nodeos_statics/db'
 require 'nodeos_statics/urlredis'
-$config = Dbconfig.new(File.join($home,"config/dbconfig.yml"))
 
 require 'nodeos_statics/nodeos_statics'
 require 'nodeos_statics/apifunc'
